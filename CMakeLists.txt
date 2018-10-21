@@ -18,23 +18,25 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_ros REQUIRED)
-find_package(example_interfaces REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rcutils)
 find_package(rmw REQUIRED)
 find_package(std_msgs REQUIRED)
-
-find_package(rclcpp REQUIRED)
-find_package(std_msgs REQUIRED)
+find_package(roar_msg REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+
+include_directories(include)
 
 add_library(ksc src/ksc.cpp)
 target_include_directories(ksc PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-ament_target_dependencies(ksc rclcpp std_msgs)
+ament_target_dependencies(ksc
+    "rclcpp"
+    "std_msgs"
+    "roar_msg")
 
 # Causes the visibility macros to use dllexport rather than dllimport,
 # which is appropriate when building the dll but not consuming it.
