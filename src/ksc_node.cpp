@@ -1,5 +1,7 @@
 #include <cstdio>
 
+// "main" in ros 2
+
 int main(int argc, char ** argv)
 {
   (void) argc;
