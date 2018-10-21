@@ -59,7 +59,7 @@ void Ksc::active_vessel_query_callback(const std_msgs::msg::String::SharedPtr ms
         // check, if the active vessel's name matches, then publish
         matches = active_vessel.name() == vessel_name;
     }
-    RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
+    RCLCPP_DEBUG(this->get_logger(), "I heard: '%s'", msg->data.c_str());
 
     // publish response
     roar_msg::msg::ActiveVesselReply reply = roar_msg::msg::ActiveVesselReply();

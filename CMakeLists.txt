@@ -58,7 +58,10 @@ add_executable(ksc_node src/ksc_node.cpp)
 target_include_directories(ksc_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-target_link_libraries(ksc_node ksc)
+target_link_libraries(ksc_node
+    "ksc"
+    "-lkrpc"
+    "-lprotobuf")
 
 install(TARGETS ksc_node
   EXPORT export_${PROJECT_NAME}
