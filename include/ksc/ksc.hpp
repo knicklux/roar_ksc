@@ -17,7 +17,7 @@ namespace ksc
 class Ksc : public rclcpp::Node
 {
 public:
-  Ksc(krpc::Client conn);
+  Ksc(krpc::Client connection);
 
   virtual ~Ksc();
 

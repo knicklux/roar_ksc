@@ -10,7 +10,7 @@ using krpc::services::SpaceCenter;
 namespace ksc
 {
 
-Ksc::Ksc(krpc::Client conn): Node("ros_ksc_node"), conn{conn}, krpc(&conn), sc(&conn)
+Ksc::Ksc(krpc::Client connection): Node("ros_ksc_node"), conn{connection}, krpc(&conn), sc(&conn)
 {
     // constructor
     std::cout << krpc.get_status().version() << std::endl;
