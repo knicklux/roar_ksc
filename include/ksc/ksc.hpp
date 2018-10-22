@@ -27,7 +27,7 @@ private:
   void active_vessel_query_callback(const std_msgs::msg::String::SharedPtr msg);
 
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr active_vessel_query_subscription;
-  rclcpp::Publisher<roar_msg::msg::ActiveVesselReply>::SharedPtr active_vessel_query_publisher;
+  rclcpp::Publisher<roar_msg::msg::ActiveVesselReply>::SharedPtr active_vessel_reply_publisher;
 
   krpc::Client conn;
   krpc::services::KRPC krpc;

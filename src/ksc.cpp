@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+#include "std_msgs/msg/string.hpp"
+#include "roar_msg/msg/active_vessel_reply.hpp"
+
 using std::placeholders::_1;
 using krpc::services::SpaceCenter;
 
@@ -17,7 +20,7 @@ Ksc::Ksc(krpc::Client connection): Node("ros_ksc_node"), conn{connection}, krpc(
 
     active_vessel_query_subscription = this->create_subscription<std_msgs::msg::String>(
           "active_vessel_query", std::bind(&Ksc::active_vessel_query_callback, this, _1));
-    active_vessel_query_publisher = this->create_publisher<roar_msg::msg::ActiveVesselReply>("active_vessel_reply");
+    active_vessel_reply_publisher = this->create_publisher<roar_msg::msg::ActiveVesselReply>("active_vessel_reply");
 }
 
 Ksc::~Ksc()
@@ -66,7 +69,7 @@ void Ksc::active_vessel_query_callback(const std_msgs::msg::String::SharedPtr ms
     reply.name = vessel_name;
     reply.unique = vesselIsUnique;
     reply.matches = matches;
-    active_vessel_query_publisher->publish(reply);
+    active_vessel_reply_publisher->publish(reply);
 }
 
 }  // namespace ksc
