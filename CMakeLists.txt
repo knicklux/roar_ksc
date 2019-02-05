@@ -30,19 +30,27 @@ find_package(roar_msg REQUIRED)
 #include_directories(include)
 
 add_library(ksc src/ksc.cpp)
+
 target_include_directories(ksc PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
+  $<INSTALL_INTERFACE:include>
+)
+
 ament_target_dependencies(ksc
     "rclcpp"
     "std_msgs"
-    "roar_msg")
+    "roar_msg"
+)
 
-add_library(ksc_demo src/ksc_demo.cpp)
+add_library(ksc_demo 
+  src/ksc_demo.cpp
+)
+
 target_include_directories(ksc_demo PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
 )
+
 ament_target_dependencies(ksc_demo
     "rclcpp"
     "std_msgs"
@@ -57,6 +65,7 @@ install(
   DIRECTORY include/
   DESTINATION include
 )
+
 install(
   TARGETS ksc
   EXPORT export_${PROJECT_NAME}
@@ -65,10 +74,23 @@ install(
   RUNTIME DESTINATION bin
 )
 
-add_executable(ksc_node src/ksc_node.cpp)
+install(
+  TARGETS ksc_demo
+  EXPORT export_${PROJECT_NAME}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+
+add_executable(ksc_node 
+  src/ksc_node.cpp
+)
+
 target_include_directories(ksc_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
+  $<INSTALL_INTERFACE:include>
+)
+
 target_link_libraries(ksc_node
     "ksc"
     "-lkrpc"
@@ -76,20 +98,25 @@ target_link_libraries(ksc_node
 )
 
 add_executable(ksc_demo_node src/ksc_demo_node.cpp)
+
 target_include_directories(ksc_demo_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
+  $<INSTALL_INTERFACE:include>
+)
+
 target_link_libraries(ksc_demo_node
     "ksc_demo"
 )
 
 install(TARGETS ksc_node
   EXPORT export_${PROJECT_NAME}
-  DESTINATION lib/${PROJECT_NAME})
+  RUNTIME DESTINATION bin/
+)
 
-install(TARGETS ksc_demo
+install(TARGETS ksc_demo_node
   EXPORT export_${PROJECT_NAME}
-  DESTINATION lib/${PROJECT_NAME})
+  RUNTIME DESTINATION bin/
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -105,9 +132,11 @@ endif()
 ament_export_include_directories(
   include
 )
+
 ament_export_interfaces(
   export_${PROJECT_NAME}
 )
+
 ament_export_libraries(
   ksc
 )
