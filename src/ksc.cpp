@@ -51,6 +51,8 @@ void Ksc::active_vessel_query_callback(const std_msgs::msg::String::SharedPtr ms
     std::vector<SpaceCenter::Vessel> all_vessels = sc.vessels();
     SpaceCenter::Vessel active_vessel = sc.active_vessel();
 
+    std::cout << "Queried for: " << vessel_name << "\n";
+
     // check, if active vessel name is unique:
     bool vesselIsUnique = this->vessel_name_in_list(active_vessel, all_vessels);
 
@@ -66,7 +68,7 @@ void Ksc::active_vessel_query_callback(const std_msgs::msg::String::SharedPtr ms
 
     // publish response
     roar_msg::msg::ActiveVesselReply reply = roar_msg::msg::ActiveVesselReply();
-    reply.name = vessel_name;
+    reply.name = active_vessel.name();
     reply.unique = vesselIsUnique;
     reply.matches = matches;
     active_vessel_reply_publisher->publish(reply);

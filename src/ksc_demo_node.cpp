@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <unistd.h>
 
 #include "ksc/ksc_demo.hpp"
 
@@ -18,11 +19,17 @@ int main(int argc, char ** argv)
     bool should_exit = false;
     std::string vessel_name = "";
 
+    // create an executor and run the node in the background
+    rclcpp::executors::SingleThreadedExecutor exec;
+    exec.add_node(node);
+
     while(!should_exit) {
         // node->publish_active_vessel_query("apollo");
         std::cout << "enter vessel name:\n" << std::flush;
         getline(std::cin, vessel_name);
         node->publish_active_vessel_query(vessel_name);
+        usleep(1000000);
+        exec.spin_once();
     }
 
     rclcpp::shutdown();

@@ -94,7 +94,7 @@ target_include_directories(ksc_node PUBLIC
 target_link_libraries(ksc_node
     "ksc"
     "-lkrpc"
-    "-lprotobuf"
+    "/usr/local/lib/libprotobuf.so.17"
 )
 
 add_executable(ksc_demo_node src/ksc_demo_node.cpp)

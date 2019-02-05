@@ -27,7 +27,7 @@ void KscDemo::active_vessel_reply_callback(const roar_msg::msg::ActiveVesselRepl
     std::string name = msg->name;
     bool matches = msg->matches;
     bool unique = msg->unique;
-    std::cout << "Active vessel: " << name << " matches: " << matches << " is unique: " << unique;
+    std::cout << "Active vessel: " << name << " matches: " << matches << " is unique: " << unique << "\n";
 }
 
 void KscDemo::publish_active_vessel_query(const std::string &expected_name) {

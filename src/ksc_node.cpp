@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <iostream>
 
 #include "ksc/ksc.hpp"
 
@@ -12,10 +13,14 @@ int main(int argc, char ** argv)
     (void) argc;
     (void) argv;
 
-    krpc::Client conn = krpc::connect("My Example Program", "192.168.1.10", 1000, 1001);
+    std::cout << "connecting...\n";
+    krpc::Client conn = krpc::connect("My Example Program", "127.0.0.1", 50000, 50001);
 
+    std::cout << "starting node\n";
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<ksc::Ksc>(conn));
+    auto node = std::make_shared<ksc::Ksc>(conn);
+    std::cout << "running...\n";
+    rclcpp::spin(node);
     rclcpp::shutdown();
 
     return 0;
