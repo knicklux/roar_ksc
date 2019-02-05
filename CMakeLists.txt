@@ -27,7 +27,7 @@ find_package(roar_msg REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
-include_directories(include)
+#include_directories(include)
 
 add_library(ksc src/ksc.cpp)
 target_include_directories(ksc PUBLIC
@@ -37,6 +37,17 @@ ament_target_dependencies(ksc
     "rclcpp"
     "std_msgs"
     "roar_msg")
+
+add_library(ksc_demo src/ksc_demo.cpp)
+target_include_directories(ksc_demo PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+ament_target_dependencies(ksc_demo
+    "rclcpp"
+    "std_msgs"
+    "roar_msg"
+)
 
 # Causes the visibility macros to use dllexport rather than dllimport,
 # which is appropriate when building the dll but not consuming it.
@@ -61,9 +72,22 @@ target_include_directories(ksc_node PUBLIC
 target_link_libraries(ksc_node
     "ksc"
     "-lkrpc"
-    "-lprotobuf")
+    "-lprotobuf"
+)
+
+add_executable(ksc_demo_node src/ksc_demo_node.cpp)
+target_include_directories(ksc_demo_node PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+target_link_libraries(ksc_demo_node
+    "ksc_demo"
+)
 
 install(TARGETS ksc_node
+  EXPORT export_${PROJECT_NAME}
+  DESTINATION lib/${PROJECT_NAME})
+
+install(TARGETS ksc_demo
   EXPORT export_${PROJECT_NAME}
   DESTINATION lib/${PROJECT_NAME})
 
