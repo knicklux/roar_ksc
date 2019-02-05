@@ -24,8 +24,7 @@ Ksc::Ksc(krpc::Client connection): Node("ksc_node"), conn{connection}, krpc(&con
 }
 
 Ksc::~Ksc()
-{
-}
+{}
 
 bool Ksc::vessel_name_in_list(SpaceCenter::Vessel vessel, std::vector<SpaceCenter::Vessel> vessel_list){
 

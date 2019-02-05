@@ -20,8 +20,7 @@ KscDemo::KscDemo(): Node("ksc_demo_node")
 }
 
 KscDemo::~KscDemo()
-{
-}
+{}
 
 void KscDemo::active_vessel_reply_callback(const roar_msg::msg::ActiveVesselReply::SharedPtr msg) {
     std::string name = msg->name;
